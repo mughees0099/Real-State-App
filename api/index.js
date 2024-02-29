@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoute from "./routes/userRoute.js";
+import authRoute from "./routes/authRoute.js";
 dotenv.config();
 const app = express();
 const db = process.env.DB_URL;
@@ -13,8 +14,11 @@ mongoose
   .catch((err) => {
     console.log("Error: ", err);
   });
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/", userRoute);
+app.use("/signup", authRoute);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
