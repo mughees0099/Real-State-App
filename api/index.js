@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", userRoute);
-app.use("/signup", authRoute);
+app.use("/api/auth", authRoute);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
