@@ -13,6 +13,7 @@ export const Signup = async (req, res, next) => {
   try {
     await user.save();
     res.status(201).json("User created successfully");
+    return;
   } catch (err) {
     next(err);
   }
@@ -26,10 +27,12 @@ export const Signin = async (req, res, next) => {
     });
     if (!user) {
       next(errorHandler(404, "User not found!"));
+      return;
     }
     const isPasswordValid = bcryptjs.compareSync(password, user.password);
     if (!isPasswordValid) {
       next(errorHandler(401, "Wrong Credentials!"));
+      return;
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     const { password: userPassword, ...others } = user._doc;
@@ -42,6 +45,7 @@ export const Signin = async (req, res, next) => {
       })
       .status(200)
       .json(others);
+    return;
   } catch (err) {
     next(err);
   }
