@@ -89,3 +89,5 @@ export default function Signup() {
     </div>
   );
 }
+
+// npm install @reduxjs/toolkit react-redux
